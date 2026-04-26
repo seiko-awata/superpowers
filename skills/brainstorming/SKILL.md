@@ -162,3 +162,23 @@ A question about a UI topic is not automatically a visual question. "What does p
 
 If they agree to the companion, read the detailed guide before proceeding:
 `skills/brainstorming/visual-companion.md`
+
+### Alternate Entry: Resume from Step 5 (KAMINA integration)
+
+If you are invoked with pre-existing outputs (e.g., KAMINA upstream's
+REQUEST.md + RESEARCH.md), you MAY skip Steps 1-4 and start from Step 5,
+provided:
+- Requirements are documented (Step 3 equivalent output exists)
+- Approach has been selected with rationale (Step 1+4 equivalent output exists)
+- The invoking caller explicitly instructs to resume from Step 5
+
+In this case, read the provided documents first, then proceed to Step 5.
+
+#### Argument convention (when invoked from KAMINA)
+
+If `KAMINA_TASK_DIR` environment variable is set and
+`${KAMINA_TASK_DIR}/.handoff/skill_args.yaml` exists, read it for:
+- request_md path
+- research_md path
+- spec_output directory (user preferences override)
+- entry_point ("step5" expected for KAMINA flow)
