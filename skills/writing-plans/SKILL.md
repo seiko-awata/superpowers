@@ -150,3 +150,35 @@ After saving the plan, offer execution choice:
 **If Inline Execution chosen:**
 - **REQUIRED SUB-SKILL:** Use superpowers:executing-plans
 - Batch execution with checkpoints for review
+
+## Knowledge Scan Phase (KAMINA extension)
+
+After File Structure is finalized and before Task Structure is written,
+perform a knowledge scan to inject KAMINA episodic knowledge into each task.
+
+### Scan procedure
+
+1. For each task in the plan, identify keywords from:
+   - File paths the task touches
+   - Functional area (auth, search, payment, etc.)
+   - Technology stack mentioned
+
+2. Invoke `/kl episode-list` (or `/kl episode-search` with keywords) to
+   retrieve related episode IDs.
+
+3. Embed retrieved episode IDs and one-line summaries into each task as a
+   `### Knowledge Supply` subsection:
+
+   ```markdown
+   ### Task N: <task name>
+
+   ...
+
+   ### Knowledge Supply (KAMINA injection)
+
+   - episode_id: ep-XXXX — <one-line summary>
+   - episode_id: ep-YYYY — <one-line summary>
+   ```
+
+4. If no relevant episodes found, write `### Knowledge Supply: (none found)`
+   explicitly (do not silently omit).
