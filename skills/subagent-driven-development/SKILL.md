@@ -275,3 +275,39 @@ Done!
 
 **Alternative workflow:**
 - **superpowers:executing-plans** - Use for parallel session instead of same-session execution
+
+## Pre-Dispatch Knowledge Injection (KAMINA extension)
+
+Before dispatching a subagent for a task, augment the implementer-prompt.md
+Context section with task-specific KAMINA episodic knowledge.
+
+### Injection procedure
+
+1. Extract task-specific keywords from:
+   - The task title
+   - Files the task touches (from File Structure)
+   - The `### Knowledge Supply` section embedded by Knowledge Scan phase
+     (if present, use as a starting set)
+
+2. Invoke `/kl episode-search "<keywords>"` to retrieve top-N relevant
+   episodes (suggested N=3-5).
+
+3. Embed full episode body (or summary, depending on size budget) into the
+   `Context` section of implementer-prompt.md:
+
+   ```markdown
+   ## Context
+
+   ...
+
+   ### Related KAMINA Episodes (auto-injected)
+
+   #### Episode ep-XXXX
+   <body or summary>
+
+   #### Episode ep-YYYY
+   <body or summary>
+   ```
+
+4. If no relevant episodes found, omit the section entirely (do not write
+   "none found" — the subagent context budget is tighter than plan budget).
